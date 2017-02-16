@@ -1,5 +1,7 @@
-class SessionsController < ApplicationController
+#no need to do this: require_relative('../helpers/application_helper')
 
+class SessionsController < ApplicationController
+#do this: include ApplicationHelper
   def new
   end
 
