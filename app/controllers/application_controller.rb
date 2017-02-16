@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
     cookies[:cart]
   end
 
+  def test
+    'foobar'
+  end
+  helper_method :test
+
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
