@@ -25,6 +25,4 @@ private
       :name
     )
   end
-
-
 end
