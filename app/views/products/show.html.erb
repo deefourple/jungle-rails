@@ -23,12 +23,19 @@
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
           <dt>Rating</dt>
-          <% if @product.reviews.any? %>
-          <dd><% @product.reviews.each do |review| %>
+            <dd>
+            <%= form_for [@product, @review] do |f| %>
+              Description: <%= f.text_field :description %> <br />
+              Rating <%= select(:review, :rating, [5, 4, 3, 2, 1], include_blank: true)%><br />
+              Submit: <%= f.submit %>
+           <% end %>
+           </dd>
+             <% if @product.reviews.any? %>
+             <dd><% @product.reviews.each do |review| %>
           <%= render 'products/review', review: review  %>
-        <% end %> </dd>
-        <% else %>
-          <dd> Sorry, there are no reviews for this item. </dd>
+              <% end %> </dd>
+          <% else %>
+              <dd> Sorry, there are no reviews for this item. </dd>
         <% end %>
         </dl>
       </div>
