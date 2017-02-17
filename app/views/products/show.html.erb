@@ -22,6 +22,14 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <dt>Rating</dt>
+          <% if @product.reviews.any? %>
+          <dd><% @product.reviews.each do |review| %>
+          <%= render 'products/review', review: review  %>
+        <% end %> </dd>
+        <% else %>
+          <dd> Sorry, there are no reviews for this item. </dd>
+        <% end %>
         </dl>
       </div>
     </div>
