@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
@@ -11,7 +13,7 @@ Rails.application.routes.draw do
 
 
   resources :products, only: [:index, :show] do
-  resources :reviews, only: [:create]
+  resources :reviews, only: [:create, :destroy]
   end
   resources :categories, only: [:show]
 

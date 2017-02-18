@@ -22,6 +22,7 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <% if current_user %>
           <dt>Rating</dt>
             <dd>
             <%= form_for [@product, @review] do |f| %>
@@ -29,9 +30,14 @@
               Rating <%= select(:review, :rating, [5, 4, 3, 2, 1], include_blank: true)%><br />
               Submit: <%= f.submit %>
            <% end %>
+           <% else %>
+           <h2> You must be logged in to leave a review. <%= link_to "Log in here!", login_path %></h2>
+
+           <% end %>
            </dd>
+           <dt>Reviews</dt>
              <% if @product.reviews.any? %>
-             <dd><% @product.reviews.each do |review| %>
+             <dd><% @product.reviews.order(created_at: :desc).each do |review| %>
           <%= render 'products/review', review: review  %>
               <% end %> </dd>
           <% else %>

@@ -3,10 +3,16 @@ class ReviewsController < ApplicationController
   def create
     review = create_review
     if review.valid?
-      redirect_to product_path(params[:product_id]),
+      redirect_to product_path(params[:product_id]), notice: 'Your review has successfully been posted'
     else
       redirect_to :back
     end
+  end
+
+  def destroy
+    @review = Review.find params[:id]
+    @review.destroy
+    redirect_to product_path(params[:product_id]), notice: 'fuckin A'
   end
 
   private
@@ -21,4 +27,6 @@ class ReviewsController < ApplicationController
     review.save!
     review
   end
+
+
 end

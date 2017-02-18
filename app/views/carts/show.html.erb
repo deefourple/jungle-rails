@@ -52,8 +52,6 @@
   </section>
   <% else %>
   <div class="text-center container">
-    <h1><a href="/">Go Home!</a> </h1>
-    <h4> Sorry, but your cart seems to be empty </h4>
-    <h1><a href="/">Go Home!</a> </h1>
+    <h4> Sorry, but your cart seems to be empty. You can <%= link_to "go home", root_path %> and browse some more.</h4>
   </div>
   <% end %>
