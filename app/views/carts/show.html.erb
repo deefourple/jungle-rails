@@ -52,6 +52,9 @@
   </section>
   <% else %>
   <div class="text-center container">
-    <h4> Sorry, but your cart seems to be empty. You can <%= link_to "go home", root_path %> and browse some more.</h4>
+
+    <button type="button" class="alert" data-dismiss="alert">
+ <h4> Sorry, but your cart seems to be empty. You can <%= link_to "go home", root_path %> and browse some more.</h4>
+</button>
   </div>
   <% end %>
