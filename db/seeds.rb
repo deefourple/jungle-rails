@@ -38,7 +38,7 @@ end
 puts "Re-creating Products ..."
 
 Product.destroy_all
-binding.pry
+
 cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
