@@ -4,97 +4,94 @@
     <h1><%= link_to @product.category.name, @product.category %> &raquo; <%= @product.name %></h1>
   </header>
 
-  <article class="product-detail">
-
-    <div class="row">
-
-      <div class="col-sm-8">
-        <%= image_tag @product.image.url, class: 'main-img img-thumbnail' %>
-      </div>
-
-
-
-  <div class="col-sm-8">
-        <dl class="dl-horizontal">
-<!-- COLLAPSE -->
-
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <%= @product.name %>
-        </a>
-      </h4>
+<article class="product-detail">
+  <div class="row">
+  <div class="col-sm-4">
+    <%= image_tag @product.image.url, class: 'main-img img-thumbnail' %>
+    <div class="col-sm-4">
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
-        <%= @product.description %>
-      </div>
+    <div class="col-sm-2">
+      <button class="btn btn-danger"> Add To Cart </button>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingTwo">
-      <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Order Details
-        </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="panel-body">
-     <h4>Quantity </h4>
-     <% if @product.quantity > 0 %>
-     <%= @product.quantity %>
-     <% else %>
-     <p> Sorry, currently out of stock.</p>
-     <% end %>
-     <h4> Price </h4>
-     <%= @product.price %>
+
+
+
+<div class="col-sm-6">
+  <dl class="dl-horizontal">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <%= @product.name %>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%= @product.description %>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Order Details
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+         <h4>Quantity </h4>
+         <% if @product.quantity > 0 %>
+         <%= @product.quantity %>
+         <% else %>
+         <p> Sorry, currently out of stock.</p>
+         <% end %>
+         <h4> Price </h4>
+         <%= @product.price %>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Ratings
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <% if current_user %>
+              <div class="form-horizontal">
+                <h4> Add A Review : </h4>
+                <%= form_for [@product, @review] do |f| %>
+                   <!-- <textarea class="form-control" rows="5" placeholder="Your review description"> -->
+                   <%= f.text_area :description, :cols => 70, :rows => 5 %>
+                    <!--  </textarea> -->
+                     <br />
+                  Rating <%= select(:review, :rating, [5, 4, 3, 2, 1], include_blank: true)%><br />
+                  <button class="btn btn-primary center">Submit<% f.submit %></button>
+                  </div>
+               <% end %>
+               <% else %>
+               <h2> You must be logged in to leave a review. <%= link_to "Log in here!", login_path %></h2>
+               <% end %>
+               <h4> Reviews: </h4>
+                 <% if @product.reviews.any? %>
+                <% @product.reviews.order(created_at: :desc).each do |review| %>
+              <%= render 'products/review', review: review  %>
+                  <% end %>
+              <% else %>
+                  Sorry, there are no reviews for this item.
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingThree">
-      <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Ratings
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div class="panel-body">
-          <% if current_user %>
-          <div class="form-horizontal">
-            <h4> Add A Review : </h4>
-            <%= form_for [@product, @review] do |f| %>
-               <!-- <textarea class="form-control" rows="5" placeholder="Your review description"> -->
-               <%= f.text_area :description, :cols => 100, :rows => 5 %>
-                <!--  </textarea> -->
-                 <br />
-              Rating <%= select(:review, :rating, [5, 4, 3, 2, 1], include_blank: true)%><br />
-              <button class="btn btn-primary center">Submit<% f.submit %></button>
-              </div>
-           <% end %>
-           <% else %>
-           <h2> You must be logged in to leave a review. <%= link_to "Log in here!", login_path %></h2>
-           <% end %>
-           <h4> Reviews: </h4>
-             <% if @product.reviews.any? %>
-            <% @product.reviews.order(created_at: :desc).each do |review| %>
-          <%= render 'products/review', review: review  %>
-              <% end %>
-          <% else %>
-              Sorry, there are no reviews for this item.
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!--COLLAPSE END  -->
 
 
 <!--
