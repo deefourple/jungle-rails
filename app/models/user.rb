@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
-  # belongs_to :line_item
+  validates :email, uniqueness: true
   has_secure_password
 end
